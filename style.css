@@ -54,8 +54,27 @@ header h1 {
   text-align: center;
 }
 h2 {
+  font-size: 60px;
   margin: 20px 0;
 }
 input[readonly] {
   border: 0;
+}
+.content span,
+.content input,
+.content select,
+.content option,
+.content em {
+  display: block;
+  margin: 0;
+  font-style: normal;
+  font-size: 30px;
+  float: left;
+  width: 50%;
+}
+.content fieldset *:nth-child(1) {
+  width: 25%;
+}
+.content fieldset *:nth-child(2) {
+  width: 75%;
 }
