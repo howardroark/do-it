@@ -77,19 +77,30 @@ $.ajax({
                                     alert("Your DigitalOcean account must have an active ssh-key.")
                                 } else {
                                     $('button').text("creating droplet...")
+
                                     var formData = $('form').serializeObject()
+
                                     var keys = []
                                     for(var i = 0; i < state.ssh_keys.length; i++) {
                                         keys[i] = state.ssh_keys[i].id
                                     }
-                                    var cloudConfig = "#cloud-config\n"+YAML.stringify(state.project.config)
+
+                                    var cloudConfig = {
+                                        runcmd: [
+                                            "echo '{\"status\":\"installing\"}' >temp/state.json",
+                                            "cd /tmp && wget https://raw.githubusercontent.com/"+username+"/"+project+"/"+state.repo.default_branch+"/"+state.project.provision.script,
+                                            "echo '{\"status\":\"complete\"}' >temp/state.json"
+                                        ]
+                                    } 
+                                    var userData = "#cloud-config\n"+YAML.stringify(cloudConfig)
+
                                     var dropletRequestData = {
                                         name: formData.name,
                                         region: formData.region,
                                         size: formData.size,
                                         image: formData.image,
                                         ssh_keys: keys,
-                                        user_data: cloudConfig 
+                                        user_data: userData 
                                     }
                                     $.ajax({
                                         type: 'POST',
