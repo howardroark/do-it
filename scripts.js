@@ -86,10 +86,15 @@ $.ajax({
                                     }
 
                                     var cloudConfig = {
+                                        packages: ["curl","node"],
                                         runcmd: [
-                                            "echo '{\"status\":\"installing\"}' >temp/state.json",
-                                            "cd /tmp && wget https://raw.githubusercontent.com/"+username+"/"+project+"/"+state.repo.default_branch+"/"+state.project.provision.script,
-                                            "echo '{\"status\":\"complete\"}' >temp/state.json"
+                                            "npm install -g http-server",
+                                            "mkdir /tmp/dobutton",
+                                            "cd /tmp/dobutton && http-server -p 33333 --cors &",
+                                            "echo '{\"status\":\"installing\"}' >/tmp/dobutton/state.json",
+                                            "curl -L https://raw.githubusercontent.com/"+username+"/"+project+"/"+state.repo.default_branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
+                                            "sh /tmp/provision.sh",
+                                            "echo '{\"status\":\"complete\"}' >/tmp/dobutton/state.json"
                                         ]
                                     } 
                                     var userData = "#cloud-config\n"+YAML.stringify(cloudConfig)
