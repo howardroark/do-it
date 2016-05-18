@@ -86,7 +86,7 @@ $.ajax({
                                     }
 
                                     var cloudConfig = {
-                                        packages: ["curl","node"],
+                                        packages: ["curl","node","npm"],
                                         runcmd: [
                                             "npm install -g http-server",
                                             "mkdir /tmp/dobutton",
