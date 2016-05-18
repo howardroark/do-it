@@ -55,6 +55,7 @@ h2 {
 form .Button {
   width: 100%;
   display: block;
+  font-size: 35px;
 }
 input[readonly] {
   border: 0;
