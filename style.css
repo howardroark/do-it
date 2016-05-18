@@ -7,6 +7,20 @@
        url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.ttf') format('truetype'),
        url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.svg#webfonWebFontt') format('svg');
 }
+body {
+  font-family: proxima-nova;
+  margin: 0;
+}
+.content {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 25px;
+}
+fieldset {
+  border: 0;
+  margin: 10px 0;
+  padding: 0;
+}
 .button {
   border-radius: 3px;
   font-weight: 600;
@@ -29,20 +43,14 @@
 form .button:disabled {
   font-size: 35px;
 }
-body {
-  font-family: proxima-nova;
-}
-fieldset {
-  border: 0;
-  margin: 10px 0;
-  padding: 0;
-}
-.content {
-  max-width: 480px;
-  margin: 0 auto;
+header {
+  height: 80px;
+  background: #298eea;
 }
 header h1 {
-  color: #298eea;
+  line-height: 80px;
+  color: #fff;
+  text-align: center;
 }
 h2 {
   margin: 20px 0;
