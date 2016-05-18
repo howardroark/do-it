@@ -1,0 +1,61 @@
+/* CSS declarations go here */
+@font-face{ 
+  font-family: 'proxima-nova';
+  src: url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.eot');
+  src: url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.woff') format('woff'),
+       url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.ttf') format('truetype'),
+       url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.svg#webfonWebFontt') format('svg');
+}
+.Button {
+  border-radius: 3px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  font-weight: 600;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  background: #ececec;
+  color: #676767;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid #ececec;
+  padding: 0 1.6rem;
+  font-size: 0.9rem;
+  height: 3rem;
+  line-height: 3rem;
+  -webkit-appearance: none;
+}
+.Button--blue {
+  color: #ffffff;
+  background: #298eea;
+  border-color: #298eea;
+}
+body {
+  font-family: proxima-nova;
+}
+fieldset {
+  border: 0;
+  margin: 10px 0;
+  padding: 0;
+}
+.content {
+  max-width: 480px;
+  margin: 0 auto;
+}
+header h1 {
+  color: #298eea;
+}
+h2 {
+  margin: 20px 0;
+}
+form .Button {
+  width: 100%;
+  display: block;
+}
+input[readonly] {
+  border: 0;
+}

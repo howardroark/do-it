@@ -1,0 +1,14 @@
+{
+  "name": "dobutton",
+  "version": "1.0.0",
+  "description": "A 'Deploy to Heroku' style button for DigitalOcean",
+  "scripts": {
+    "install": "bower install",
+    "start": "harp server & browser-sync start --proxy http://localhost:9000 --files ."
+  },
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "browser-sync": "^2.12.8",
+    "harp": "^0.20.3"
+  }
+}
