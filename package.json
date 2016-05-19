@@ -5,7 +5,7 @@
   "scripts": {
     "install": "bower install",
     "start": "harp server & browser-sync start --proxy http://localhost:9000 --files .",
-    "deploy": "surge --domain dobutton.surge.sh"
+    "deploy": "surge --domain dobutton.club"
   },
   "devDependencies": {
     "bower": "^1.7.9",

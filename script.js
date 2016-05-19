@@ -90,15 +90,15 @@ $.ajax({
                                         runcmd: [
                                             "mkdir -p /tmp/dobutton/node",
                                             "mkdir -p /tmp/dobutton/public",
+                                            "echo '{\"status\":\"installing\"}' >/tmp/dobutton/public/state.json",
                                             "curl -L https://nodejs.org/download/release/v0.10.45/node-v0.10.45-linux-x64.tar.gz -o /tmp/dobutton/node.tar.gz",
                                             "tar -xvf /tmp/dobutton/node.tar.gz -C /tmp/dobutton/node --strip-components=1",
                                             "/tmp/dobutton/node/bin/npm install -g http-server",
                                             "/tmp/dobutton/node/bin/node /tmp/dobutton/node/lib/node_modules/http-server/bin/http-server /tmp/dobutton/public -p 33333 --cors &",
-                                            "echo '{\"status\":\"installing\"}' >/tmp/dobutton/public/state.json",
                                             "curl -L https://raw.githubusercontent.com/"+username+"/"+project+"/"+state.repo.default_branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
                                             "sh /tmp/provision.sh",
                                             "echo '{\"status\":\"complete\"}' >/tmp/dobutton/public/state.json",
-                                            "sleep 30; kill -9 $(ps aux | grep -i \"http-server.*33333\" | awk {'print $2'}); rm -rf /tmp/dobutton"
+                                            "sleep 60; kill -9 $(ps aux | grep -i \"http-server.*33333\" | awk {'print $2'}); rm -rf /tmp/dobutton"
                                         ]
                                     } 
                                     var userData = "#cloud-config\n"+YAML.stringify(cloudConfig)
