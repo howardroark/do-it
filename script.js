@@ -86,12 +86,19 @@ $.ajax({
                                     }
 
                                     var cloudConfig = {
-                                        packages: ["curl","nginx"],
+                                        packages: ["curl"],
                                         runcmd: [
-                                            "echo '{\"status\":\"installing\"}' >/var/www/html/state.json",
+                                            "mkdir -p /tmp/dobutton/node",
+                                            "mkdir -p /tmp/dobutton/public",
+                                            "curl -L https://nodejs.org/download/release/v0.10.45/node-v0.10.45-linux-x64.tar.gz -o /tmp/dobutton/node.tar.gz",
+                                            "tar -xvf /tmp/dobutton/node.tar.gz -C /tmp/dobutton/node --strip-components=1",
+                                            "/tmp/dobutton/node/bin/npm install -g http-server",
+                                            "/tmp/dobutton/node/bin/node /tmp/dobutton/node/lib/node_modules/http-server/bin/http-server /tmp/dobutton/public -p 33333 --cors &",
+                                            "echo '{\"status\":\"installing\"}' >/tmp/dobutton/public/state.json",
                                             "curl -L https://raw.githubusercontent.com/"+username+"/"+project+"/"+state.repo.default_branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
                                             "sh /tmp/provision.sh",
-                                            "echo '{\"status\":\"complete\"}' >/var/www/html/state.json"
+                                            "echo '{\"status\":\"complete\"}' >/tmp/dobutton/public/state.json",
+                                            "sleep 30; kill -9 $(ps aux | grep -i \"http-server.*33333\" | awk {'print $2'}); rm -rf /tmp/dobutton"
                                         ]
                                     } 
                                     var userData = "#cloud-config\n"+YAML.stringify(cloudConfig)
@@ -111,9 +118,35 @@ $.ajax({
                                         contentType: 'application/json',
                                         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
                                         success: function(data) {
-                                            $('button').text("running scripts...")
                                             state.droplet = data.droplet
-                                            console.log(state, cloudConfig)
+                                            
+                                            var dropletStatusInterval = setInterval(function() {
+                                                $.ajax({
+                                                    url: 'https://api.digitalocean.com/v2/droplets/'+state.droplet.id,
+                                                    contentType: 'application/json',
+                                                    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
+                                                    success: function(data) {
+                                                        if(data.droplet.status == 'active') {
+                                                            state.droplet = data.droplet
+                                                            clearInterval(dropletStatusInterval)
+                                                            $('button').text("running script...")
+                                                            var scriptStatusInterval = setInterval(function() {
+                                                                $.ajax({
+                                                                    url: 'http://'+state.droplet.networks.v4[0].ip_address+':33333/state.json',
+                                                                    dataType: 'json',
+                                                                    success: function(data) {
+                                                                        console.log(data)
+                                                                        if(data.status == 'complete') {
+                                                                            clearInterval(scriptStatusInterval)
+                                                                            $('button').text("all done :)")
+                                                                        }
+                                                                    }
+                                                                })
+                                                            }, 3000)
+                                                        }
+                                                    }
+                                                })
+                                            }, 3000)
                                         }
                                     })
                                 }
