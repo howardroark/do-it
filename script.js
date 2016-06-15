@@ -140,6 +140,7 @@ $.ajax({
                                                                             clearInterval(scriptStatusInterval)
                                                                             $('button').text("done! goto your project...")
                                                                             $('button').click(function() {window.location.href = 'http://'+state.droplet.networks.v4[0].ip_address; return false})
+                                                                            $('button').prop("disabled",false)
                                                                         }
                                                                     }
                                                                 })
