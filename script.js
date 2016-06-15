@@ -138,7 +138,7 @@ $.ajax({
                                                                         console.log(data)
                                                                         if(data.status == 'complete') {
                                                                             clearInterval(scriptStatusInterval)
-                                                                            $('button').text("done, now goto your new project!")
+                                                                            $('button').text("done! goto your project...")
                                                                             $('button').click(function() {window.location.href = 'http://'+state.droplet.networks.v4[0].ip_address; return false})
                                                                         }
                                                                     }
