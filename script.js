@@ -65,7 +65,7 @@ $.ajax({
                                     "oauth",
                                     "menubar=1,resizable=1,width=860,height=600")
                     } else {
-                        $('button').prop("disabled",true)
+                        $('button').off().prop("disabled",true)
                         $('button').text("checking for ssh-keys...")
                         $.ajax({
                             url: 'https://api.digitalocean.com/v2/account/keys',
@@ -138,9 +138,9 @@ $.ajax({
                                                                         console.log(data)
                                                                         if(data.status == 'complete') {
                                                                             clearInterval(scriptStatusInterval)
+                                                                            $('button').prop("disabled",false)
                                                                             $('button').text("GO!")
                                                                             $('button').click(function() {window.location.href = 'http://'+state.droplet.networks.v4[0].ip_address; return false})
-                                                                            $('button').prop("disabled",false)
                                                                         }
                                                                     }
                                                                 })
