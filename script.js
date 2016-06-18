@@ -1,4 +1,5 @@
 nunjucks.configure({ autoescape: true })
+var md = new Remarkable()
 
 var parser = document.createElement('a')
 parser.href = document.location.href
@@ -98,7 +99,7 @@ $.ajax({
                                             "curl -L https://raw.githubusercontent.com/"+username+"/"+project+"/"+state.repo.default_branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
                                             "sh /tmp/provision.sh",
                                             "echo '{\"status\":\"complete\"}' >/tmp/dobutton/public/state.json",
-                                            "sleep 60; kill -9 $(ps aux | grep -i \"http-server.*33333\" | awk {'print $2'}); rm -rf /tmp/dobutton"
+                                            "sleep 900; kill -9 $(ps aux | grep -i \"http-server.*33333\" | awk {'print $2'}); rm -rf /tmp/dobutton"
                                         ]
                                     } 
                                     var userData = "#cloud-config\n"+YAML.stringify(cloudConfig)
@@ -128,11 +129,12 @@ $.ajax({
                                                     success: function(data) {
                                                         if(data.droplet.status == 'active') {
                                                             state.droplet = data.droplet
+                                                            state.droplet.ip = state.droplet.networks.v4[0].ip_address
                                                             clearInterval(dropletStatusInterval)
                                                             $('button').text("running script...")
                                                             var scriptStatusInterval = setInterval(function() {
                                                                 $.ajax({
-                                                                    url: 'http://'+state.droplet.networks.v4[0].ip_address+':33333/state.json',
+                                                                    url: 'http://'+state.droplet.ip+':33333/state.json',
                                                                     dataType: 'json',
                                                                     success: function(data) {
                                                                         console.log(data)
@@ -140,7 +142,11 @@ $.ajax({
                                                                             clearInterval(scriptStatusInterval)
                                                                             $('button').prop("disabled",false)
                                                                             $('button').text("GO!")
-                                                                            $('button').click(function() {window.location.href = 'http://'+state.droplet.networks.v4[0].ip_address; return false})
+                                                                            $('button').click(function() {var win = window.open('http://'+state.droplet.networks.v4[0].ip_address, '_blank'); win.focus(); return false})
+                                                                            $('fieldset').hide()
+                                                                            if(typeof state.project.provision.instructions != 'undefined') {
+                                                                                $('button').before('<div class="instructions">'+nunjucks.renderString(md.render(state.project.provision.instructions), state)+'</div>')
+                                                                            }
                                                                         }
                                                                     }
                                                                 })

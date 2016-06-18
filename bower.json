@@ -7,6 +7,7 @@
     "yaml.js": "^0.2.7",
     "jquery-serialize-object": "^2.5.0",
     "js-cookie": "^2.1.1",
-    "font-awesome": "^4.6.3"
+    "font-awesome": "^4.6.3",
+    "remarkable": "^1.6.2"
   }
 }
