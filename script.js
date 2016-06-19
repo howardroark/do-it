@@ -64,7 +64,7 @@ $.ajax({
                     if(typeof Cookies.get('AccessToken') == 'undefined') {
                         window.open("https://cloud.digitalocean.com/v1/oauth/authorize?response_type=token&client_id="+clientId+"&redirect_uri="+baseURL+"/callback&scope=read+write",
                                     "oauth",
-                                    "menubar=1,resizable=1,width=860,height=600")
+                                    "menubar=1,resizable=1,width=1100,height=700")
                     } else {
                         $('button').off().prop("disabled",true)
                         $('button').text("checking for ssh-keys...")
