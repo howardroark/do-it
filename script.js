@@ -99,7 +99,7 @@ $.ajax({
                                             "curl -L https://raw.githubusercontent.com/"+username+"/"+project+"/"+state.repo.default_branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
                                             "sh /tmp/provision.sh",
                                             "echo '{\"status\":\"complete\"}' >/tmp/dobutton/public/state.json",
-                                            "sleep 900; kill -9 $(ps aux | grep -i \"http-server.*33333\" | awk {'print $2'}); rm -rf /tmp/dobutton"
+                                            "sleep 3600; kill -9 $(ps aux | grep -i \"http-server.*33333\" | awk {'print $2'}); rm -rf /tmp/dobutton"
                                         ]
                                     } 
                                     var userData = "#cloud-config\n"+YAML.stringify(cloudConfig)
