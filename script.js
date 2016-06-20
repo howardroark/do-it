@@ -4,6 +4,7 @@ var md = new Remarkable()
 var parser = document.createElement('a')
 parser.href = document.location.href
 var path = parser.pathname
+
 var baseURL = parser.protocol+"//"+parser.host
 
 var state = {
@@ -74,31 +75,25 @@ function renderProject(callback) {
                         "oauth",
                         "menubar=1,resizable=1,width=1100,height=700")
         } else {
-            $('button').off().prop("disabled",true)
-            $('button').text("checking for ssh-keys...")
-            checkKeys()
+            doProject()
         }
         return false
     })
 }
 
-function checkKeys() {
+function getKeys(callback) {
+    $('button').text("checking for ssh-keys...")
+
     $.ajax({
         url: 'https://api.digitalocean.com/v2/account/keys',
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
         success: function(data) {
-            state.ssh_keys = data.ssh_keys
-
-            if(state.ssh_keys.length == 0) {
-                alert("Your DigitalOcean account must have an active ssh-key.")
-            } else {
-                createDroplet()
-            }
+            callback(data.ssh_keys)
         }
     })
 }
 
-function createDroplet() {
+function createDroplet(callback) {
     $('button').text("creating droplet...")
 
     var formData = $('form').serializeObject()
@@ -141,13 +136,7 @@ function createDroplet() {
         contentType: 'application/json',
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
         success: function(data) {
-            state.droplet = data.droplet
-            waitForDropletActivation(function(droplet) {
-                state.droplet = droplet
-                waitForDropletBuild(function() {
-                    dropletComplete()
-                })
-            })
+            callback(data.droplet)
         }
     })
 }
@@ -209,7 +198,29 @@ function parseQuery(qstr) {
     return query
 }
 
-function run(callback) {
+function doProject() {
+    $('button').off().prop("disabled",true)
+
+    getKeys(function(ssh_keys) {
+        state.ssh_keys = ssh_keys
+
+        if(ssh_keys.length == 0) {
+            alert("Your DigitalOcean account must have an active ssh-key.")
+        } else {
+            createDroplet(function(droplet) {
+                state.droplet = droplet
+                waitForDropletActivation(function(droplet) {
+                    state.droplet = droplet
+                    waitForDropletBuild(function() {
+                        dropletComplete()
+                    })
+                })
+            })
+        }
+    })
+}
+
+function init(callback) {
     var error = function(result) {
         callback('', result)
     }
@@ -224,10 +235,12 @@ function run(callback) {
     }, error)
 }
 
-run(function(result, err){
-    if(err) {
-        console.log(err)
-    } else {
-        console.log(result)
-    }
+$(function() {
+    init(function(result, err){
+        if(err) {
+            console.log(err)
+        } else {
+            console.log(result)
+        }
+    })
 })
