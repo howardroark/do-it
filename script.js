@@ -6,6 +6,7 @@ parser.href = document.location.href
 var path = parser.pathname
 
 var baseURL = parser.protocol+"//"+parser.host
+var interval = 5000
 
 var state = {
     userName: path.split('/')[1],
@@ -138,7 +139,6 @@ function createDroplet(callback) {
 }
 
 function waitForDropletActivation(callback) {
-    var interval = 2000
     var checkDroplet = function() {
         $.ajax({
             url: 'https://api.digitalocean.com/v2/droplets/'+state.droplet.id,
@@ -159,41 +159,24 @@ function waitForDropletActivation(callback) {
 }
 
 function waitForDropletProvision(callback) {
-    var interval = 2000
     var checkDroplet = function() {
-        if(typeof window.lastProvisionCheck == 'undefined') {
-            window.lastProvisionCheck = Date.now()
-        }
-
-        var timeDifference = Date.now() - window.lastProvisionCheck
-
-        if(timeDifference >= interval) {
-            $.ajax({
-                url: 'http://'+state.droplet.ip+':33333/state.json',
-                dataType: 'json',
-                timeout: 2000,
-                error: function() {
+        $.ajax({
+            url: 'http://'+state.droplet.ip+':33333/state.json',
+            dataType: 'json',
+            timeout: 2000,
+            error: function() {
+                setTimeout(checkDroplet, interval)
+            },
+            success: function(data) {
+                if(data.status == 'complete') {
+                    callback(data)
+                } else {
                     setTimeout(checkDroplet, interval)
-                },
-                success: function(data) {
-                    if(data.status == 'complete') {
-                        callback(data)
-                    } else {
-                        setTimeout(checkDroplet, interval)
-                    }
                 }
-            })
-        }
+            }
+        })
     }
-
     checkDroplet()
-
-    // In case someone leaves the tab for a while
-    $(window).on('focus', function() {
-        if(state.project.provision.status != 'complete') {
-            checkDroplet()
-        }
-    })
 }
 
 function parseQuery(qstr) {
@@ -221,13 +204,17 @@ function doProject() {
                     state.droplet = droplet
                     $('button').text("provisioning droplet...")
                     waitForDropletProvision(function(provision) {
-                        state.project.provision = provision
+                        state.project.provision = $.extend({}, state.project.provision, provision)
                         $('button').prop("disabled",false)
                         $('button').text("GO!")
                         $('button').click(function() {var win = window.open('http://'+state.droplet.networks.v4[0].ip_address, '_blank'); win.focus(); return false})
                         $('fieldset').hide()
                         if(typeof state.project.provision.instructions != 'undefined') {
-                            $('button').before('<div class="instructions">'+nunjucks.renderString(md.render(state.project.provision.instructions), state)+'</div>')
+                            $('.instructions').html(
+                                nunjucks.renderString(
+                                    md.render(state.project.provision.instructions), state
+                                )
+                            )
                         }
                     })
                 })
