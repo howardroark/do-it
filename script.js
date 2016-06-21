@@ -82,8 +82,6 @@ function renderProject(callback) {
 }
 
 function getKeys(callback) {
-    $('button').text("checking for ssh-keys...")
-
     $.ajax({
         url: 'https://api.digitalocean.com/v2/account/keys',
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
@@ -94,8 +92,6 @@ function getKeys(callback) {
 }
 
 function createDroplet(callback) {
-    $('button').text("creating droplet...")
-
     var formData = $('form').serializeObject()
 
     var keys = []
@@ -142,50 +138,46 @@ function createDroplet(callback) {
 }
 
 function waitForDropletActivation(callback) {
-    var interval = 1000
-    var dropletStatusInterval = setInterval(function() {
+    var interval = 2000
+    var checkDroplet = function() {
         $.ajax({
             url: 'https://api.digitalocean.com/v2/droplets/'+state.droplet.id,
             contentType: 'application/json',
             beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
             success: function(data) {
                 if(data.droplet.status == 'active') {
-                    clearInterval(dropletStatusInterval)
                     var droplet = data.droplet
                     droplet.ip = droplet.networks.v4[0].ip_address
                     callback(droplet)
+                } else {
+                    setTimeout(checkDroplet, interval)
                 }
             }
         })
-    }, interval)
+    }
+    checkDroplet()
 }
 
-function waitForDropletBuild(callback) {
-    $('button').text("running script...")
-
-    var interval = 1000
-    var scriptStatusInterval = setInterval(function() {
+function waitForProjectBuild(callback) {
+    var interval = 2000
+    var checkDroplet = function() {
         $.ajax({
             url: 'http://'+state.droplet.ip+':33333/state.json',
             dataType: 'json',
+            timeout: 2000,
+            error: function() {
+                setTimeout(checkDroplet, interval)
+            },
             success: function(data) {
                 if(data.status == 'complete') {
-                    clearInterval(scriptStatusInterval)
                     callback()
+                } else {
+                    setTimeout(checkDroplet, interval)
                 }
             }
         })
-    }, interval)
-}
-
-function dropletComplete() {
-    $('button').prop("disabled",false)
-    $('button').text("GO!")
-    $('button').click(function() {var win = window.open('http://'+state.droplet.networks.v4[0].ip_address, '_blank'); win.focus(); return false})
-    $('fieldset').hide()
-    if(typeof state.project.provision.instructions != 'undefined') {
-        $('button').before('<div class="instructions">'+nunjucks.renderString(md.render(state.project.provision.instructions), state)+'</div>')
     }
+    checkDroplet()
 }
 
 function parseQuery(qstr) {
@@ -200,19 +192,26 @@ function parseQuery(qstr) {
 
 function doProject() {
     $('button').off().prop("disabled",true)
-
+    $('button').text("checking for ssh-keys...")
     getKeys(function(ssh_keys) {
         state.ssh_keys = ssh_keys
-
         if(ssh_keys.length == 0) {
             alert("Your DigitalOcean account must have an active ssh-key.")
         } else {
+            $('button').text("creating droplet...")
             createDroplet(function(droplet) {
                 state.droplet = droplet
                 waitForDropletActivation(function(droplet) {
                     state.droplet = droplet
-                    waitForDropletBuild(function() {
-                        dropletComplete()
+                    $('button').text("running script...")
+                    waitForProjectBuild(function() {
+                        $('button').prop("disabled",false)
+                        $('button').text("GO!")
+                        $('button').click(function() {var win = window.open('http://'+state.droplet.networks.v4[0].ip_address, '_blank'); win.focus(); return false})
+                        $('fieldset').hide()
+                        if(typeof state.project.provision.instructions != 'undefined') {
+                            $('button').before('<div class="instructions">'+nunjucks.renderString(md.render(state.project.provision.instructions), state)+'</div>')
+                        }
                     })
                 })
             })
