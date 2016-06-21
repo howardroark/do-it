@@ -177,7 +177,7 @@ function waitForDropletProvision(callback) {
                 },
                 success: function(data) {
                     if(data.status == 'complete') {
-                        callback(data.status)
+                        callback(data)
                     } else {
                         setTimeout(checkDroplet, interval)
                     }
@@ -190,7 +190,9 @@ function waitForDropletProvision(callback) {
 
     // In case someone leaves the tab for a while
     $(window).on('focus', function() {
-        checkDroplet()
+        if(state.project.provision.status != 'complete') {
+            checkDroplet()
+        }
     })
 }
 
@@ -218,8 +220,8 @@ function doProject() {
                 waitForDropletActivation(function(droplet) {
                     state.droplet = droplet
                     $('button').text("provisioning droplet...")
-                    waitForDropletProvision(function(status) {
-                        state.droplet.status = status
+                    waitForDropletProvision(function(provision) {
+                        state.project.provision = provision
                         $('button').prop("disabled",false)
                         $('button').text("GO!")
                         $('button').click(function() {var win = window.open('http://'+state.droplet.networks.v4[0].ip_address, '_blank'); win.focus(); return false})
