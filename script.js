@@ -158,26 +158,40 @@ function waitForDropletActivation(callback) {
     checkDroplet()
 }
 
-function waitForProjectBuild(callback) {
+function waitForDropletProvision(callback) {
     var interval = 2000
     var checkDroplet = function() {
-        $.ajax({
-            url: 'http://'+state.droplet.ip+':33333/state.json',
-            dataType: 'json',
-            timeout: 2000,
-            error: function() {
-                setTimeout(checkDroplet, interval)
-            },
-            success: function(data) {
-                if(data.status == 'complete') {
-                    callback()
-                } else {
+        if(typeof window.lastProvisionCheck == 'undefined') {
+            window.lastProvisionCheck = Date.now()
+        }
+
+        var timeDifference = Date.now() - window.lastProvisionCheck
+
+        if(timeDifference >= interval) {
+            $.ajax({
+                url: 'http://'+state.droplet.ip+':33333/state.json',
+                dataType: 'json',
+                timeout: 2000,
+                error: function() {
                     setTimeout(checkDroplet, interval)
+                },
+                success: function(data) {
+                    if(data.status == 'complete') {
+                        callback(data.status)
+                    } else {
+                        setTimeout(checkDroplet, interval)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
+
     checkDroplet()
+
+    // In case someone leaves the tab for a while
+    $(window).on('focus', function() {
+        checkDroplet()
+    })
 }
 
 function parseQuery(qstr) {
@@ -203,8 +217,9 @@ function doProject() {
                 state.droplet = droplet
                 waitForDropletActivation(function(droplet) {
                     state.droplet = droplet
-                    $('button').text("running script...")
-                    waitForProjectBuild(function() {
+                    $('button').text("provisioning droplet...")
+                    waitForDropletProvision(function(status) {
+                        state.droplet.status = status
                         $('button').prop("disabled",false)
                         $('button').text("GO!")
                         $('button').click(function() {var win = window.open('http://'+state.droplet.networks.v4[0].ip_address, '_blank'); win.focus(); return false})
