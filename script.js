@@ -186,7 +186,7 @@ function waitForDropletProvision(callback) {
         }
     }
 
-    checkDroplet()
+    setTimeout(checkDroplet, 30000)
 
     // In case someone leaves the tab for a while
     $(window).on('focus', function() {
