@@ -52,6 +52,7 @@ header h1 {
   line-height: 80px;
   color: #fff;
   text-align: center;
+  margin: 0;
 }
 h2 {
   font-size: 60px;

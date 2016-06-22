@@ -107,7 +107,7 @@ function createDroplet(callback) {
             "curl -L https://nodejs.org/download/release/v0.10.45/node-v0.10.45-linux-x64.tar.gz -o /tmp/dobutton/node.tar.gz",
             "tar -xvf /tmp/dobutton/node.tar.gz -C /tmp/dobutton/node --strip-components=1",
             "/tmp/dobutton/node/bin/npm install -g http-server",
-            "/tmp/dobutton/node/bin/node /tmp/dobutton/node/lib/node_modules/http-server/bin/http-server /tmp/dobutton/public -p 33333 --cors &",
+            "/tmp/dobutton/node/bin/node /tmp/dobutton/node/lib/node_modules/http-server/bin/http-server /tmp/dobutton/public -p 33333 --cors --headers='{\"Content-Type\":\"application/json; charset=utf-8\"}' &",
             "curl -L https://raw.githubusercontent.com/"+state.userName+"/"+state.projectName+"/"+state.repo.default_branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
             "sh /tmp/provision.sh",
             "echo '{\"status\":\"complete\"}' >/tmp/dobutton/public/state.json",
