@@ -138,42 +138,38 @@ function createDroplet(callback) {
     })
 }
 
-function waitForDropletActivation(callback) {
-    var checkDroplet = function() {
-        $.ajax({
-            url: 'https://api.digitalocean.com/v2/droplets/'+state.droplet.id,
-            contentType: 'application/json',
-            beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
-            success: function(data) {
-                if(data.droplet.status == 'active') {
-                    var droplet = data.droplet
-                    droplet.ip = droplet.networks.v4[0].ip_address
-                    callback(droplet)
-                } else {
-                    setTimeout(checkDroplet, interval)
-                }
-            }
-        })
+function waitFor(action, callback) {
+    var url = 'https://api.digitalocean.com/v2/droplets/'+state.droplet.id
+    var success = function(data) {
+        if(data.droplet.status == 'active') {
+            var droplet = data.droplet
+            droplet.ip = droplet.networks.v4[0].ip_address
+            callback(droplet)
+        } else {
+            setTimeout(checkDroplet, interval)
+        }
     }
-    checkDroplet()
-}
-
-function waitForDropletProvision(callback) {
+    if(action == 'provision') {
+        url = 'http://'+state.droplet.ip+':33333/state.json'
+        success = function(data) {
+            if(data.status == 'complete') {
+                callback(data)
+            } else {
+                setTimeout(checkDroplet, interval)
+            }
+        }
+    }
     var checkDroplet = function() {
         $.ajax({
-            url: 'http://'+state.droplet.ip+':33333/state.json',
+            url: url,
+            contentType: 'application/json',
             dataType: 'json',
             timeout: 2000,
+            beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
             error: function() {
                 setTimeout(checkDroplet, interval)
             },
-            success: function(data) {
-                if(data.status == 'complete') {
-                    callback(data)
-                } else {
-                    setTimeout(checkDroplet, interval)
-                }
-            }
+            success: success
         })
     }
     checkDroplet()
@@ -200,10 +196,10 @@ function doProject() {
             $('button').text("creating droplet...")
             createDroplet(function(droplet) {
                 state.droplet = droplet
-                waitForDropletActivation(function(droplet) {
+                waitFor('activation', function(droplet) {
                     state.droplet = droplet
                     $('button').text("provisioning droplet...")
-                    waitForDropletProvision(function(provision) {
+                    waitFor('provision', function(provision) {
                         state.project.provision = $.extend({}, state.project.provision, provision)
                         $('button').prop("disabled",false)
                         $('button').text("GO!")
