@@ -5,9 +5,6 @@ var parser = document.createElement('a')
 parser.href = document.location.href
 var path = parser.pathname
 
-var baseURL = parser.protocol+"//"+parser.host
-var interval = 5000
-
 var state = {
     userName: path.split('/')[1],
     projectName: path.split('/')[2]
@@ -65,6 +62,7 @@ function getProject(callback) {
 }
 
 function renderProject(callback) {
+    var baseURL = parser.protocol+"//"+parser.host
     var projectTemplate = $('script[name=project]').text()
     var projectHTML = nunjucks.renderString(projectTemplate, state)
 
@@ -139,6 +137,7 @@ function createDroplet(callback) {
 }
 
 function waitFor(action, callback) {
+    var interval = 5000
     var url = 'https://api.digitalocean.com/v2/droplets/'+state.droplet.id
     var success = function(data) {
         if(data.droplet.status == 'active') {
