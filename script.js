@@ -107,7 +107,7 @@ function createDroplet(callback) {
             "curl -L https://nodejs.org/download/release/v0.10.45/node-v0.10.45-linux-x64.tar.gz -o /tmp/dobutton/node.tar.gz",
             "tar -xvf /tmp/dobutton/node.tar.gz -C /tmp/dobutton/node --strip-components=1",
             "/tmp/dobutton/node/bin/npm install -g http-server",
-            "/tmp/dobutton/node/bin/node /tmp/dobutton/node/lib/node_modules/http-server/bin/http-server /tmp/dobutton/public -p 33333 --cors --headers='{\"Content-Type\":\"application/json; charset=utf-8\"}' &",
+            "/tmp/dobutton/node/bin/node /tmp/dobutton/node/lib/node_modules/http-server/bin/http-server /tmp/dobutton/public -p 33333 -c-1 --cors &",
             "curl -L https://raw.githubusercontent.com/"+state.userName+"/"+state.projectName+"/"+state.repo.default_branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
             "sh /tmp/provision.sh",
             "echo '{\"status\":\"complete\"}' >/tmp/dobutton/public/state.json",
@@ -139,6 +139,13 @@ function createDroplet(callback) {
 function waitFor(action, callback) {
     var interval = 5000
     var url = 'https://api.digitalocean.com/v2/droplets/'+state.droplet.id
+    var dataType = 'json'
+    var beforeSend = function(xhr){
+        xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))
+    }
+    var error = function() {
+        setTimeout(checkDroplet, interval)
+    }
     var success = function(data) {
         if(data.droplet.status == 'active') {
             var droplet = data.droplet
@@ -150,7 +157,10 @@ function waitFor(action, callback) {
     }
     if(action == 'provision') {
         url = 'http://'+state.droplet.ip+':33333/state.json'
+        dataType = 'text'
+        beforeSend = function(xhr){}
         success = function(data) {
+            data = JSON.parse(data)
             if(data.status == 'complete') {
                 callback(data)
             } else {
@@ -161,13 +171,10 @@ function waitFor(action, callback) {
     var checkDroplet = function() {
         $.ajax({
             url: url,
-            contentType: 'application/json',
-            dataType: 'json',
+            dataType: dataType,
             timeout: 2000,
-            beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
-            error: function() {
-                setTimeout(checkDroplet, interval)
-            },
+            beforeSend: beforeSend,
+            error: error,
             success: success
         })
     }
