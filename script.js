@@ -7,7 +7,12 @@ var path = parser.pathname
 
 var state = {
     userName: path.split('/')[1],
-    projectName: path.split('/')[2]
+    projectName: path.split('/')[2],
+    id: uuid.v4()
+}
+
+if(window.location.hash != '') {
+    state = JSON.parse(localStorage.getItem(window.location.hash.replace('#','')))
 }
 
 var clientId
@@ -74,10 +79,12 @@ function renderProject(callback) {
                         "oauth",
                         "menubar=1,resizable=1,width=1100,height=700")
         } else {
-            doProject()
+            doProject(e)
         }
         return false
     })
+
+    callback()
 }
 
 function getKeys(callback) {
@@ -191,9 +198,27 @@ function parseQuery(qstr) {
     return query
 }
 
-function doProject() {
+function renderComplete() {
+    $('button').prop("disabled",false)
+    $('button').text("GO!")
+    $('button').click(function() {var win = window.open('http://'+state.droplet.networks.v4[0].ip_address, '_blank'); win.focus(); return false})
+    $('fieldset').hide()
+    if(typeof state.project.provision.instructions != 'undefined') {
+        $('.instructions').html(
+            nunjucks.renderString(
+                md.render(state.project.provision.instructions), state
+            )
+        )
+    }
+}
+
+function doProject(e) {
+    window.location.hash = state.id 
+    localStorage.setItem( state.id, JSON.stringify(state) )
+
     $('button').off().prop("disabled",true)
     $('button').text("checking for ssh-keys...")
+
     getKeys(function(ssh_keys) {
         state.ssh_keys = ssh_keys
         if(ssh_keys.length == 0) {
@@ -204,40 +229,41 @@ function doProject() {
                 state.droplet = droplet
                 waitFor('activation', function(droplet) {
                     state.droplet = droplet
+                    localStorage.setItem( state.id, JSON.stringify(state) )
                     $('button').text("provisioning droplet...")
                     waitFor('provision', function(provision) {
                         state.project.provision = $.extend({}, state.project.provision, provision)
-                        $('button').prop("disabled",false)
-                        $('button').text("GO!")
-                        $('button').click(function() {var win = window.open('http://'+state.droplet.networks.v4[0].ip_address, '_blank'); win.focus(); return false})
-                        $('fieldset').hide()
-                        if(typeof state.project.provision.instructions != 'undefined') {
-                            $('.instructions').html(
-                                nunjucks.renderString(
-                                    md.render(state.project.provision.instructions), state
-                                )
-                            )
-                        }
+                        localStorage.setItem(state.id, JSON.stringify(state))
+                        renderComplete()
                     })
                 })
             })
         }
     })
+
+    e.preventDefault()
 }
 
 function init(callback) {
     var error = function(result) {
         callback('', result)
     }
-    getRepo(function(repo) {
-        state.repo = repo
-        getProject(function(project) {
-            state.project = project
-            renderProject(function() {
-                callback(state)
+    if(typeof state.project == 'undefined') {
+        getRepo(function(repo) {
+            state.repo = repo
+            getProject(function(project) {
+                state.project = project
+                renderProject(function() {
+                    callback(state)
+                }, error)
             }, error)
         }, error)
-    }, error)
+    } else {
+        renderProject(function() {
+            renderComplete()
+            callback(state)
+        }, error)
+    }
 }
 
 $(function() {
