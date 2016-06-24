@@ -10,6 +10,7 @@
 body {
   font-family: proxima-nova;
   margin: 0;
+  color: #1d1d1d;
 }
 .content {
   max-width: 480px;
@@ -57,6 +58,14 @@ header h1 {
 h2 {
   font-size: 60px;
   margin: 20px 0;
+}
+h2 a,
+h2 a:visited {
+  color: #1d1d1d;
+  text-decoration: none;
+}
+h2 a:hover {
+  text-decoration: underline;
 }
 input[readonly] {
   border: 0;
