@@ -22,20 +22,6 @@ if(parser.hostname == "localhost") {
     clientId = "118ee6aceaf7a16c4f8f83536a334233bc2b22e2c6a286ef7a83fa4a2714f328"
 }
 
-if(path == "/") {
-    //
-}
-
-if(path == "/callback") {
-    var callback = parseQuery(window.location.hash)
-    if(typeof callback.error == 'undefined') {
-        Cookies.set( 'AccessToken', callback.access_token )
-    } else {
-
-    }
-    window.close()
-}
-
 function getRepo(callback) {
     var url = 'https://api.github.com/repos/'+state.userName+'/'+state.projectName
     if(typeof Cookies.get('GitHubToken') != 'undefined') {
@@ -74,12 +60,13 @@ function renderProject(callback) {
     $('body').append(projectHTML)
 
     $('button').click(function(e) {
+        e.preventDefault()
         if(typeof Cookies.get('AccessToken') == 'undefined') {
             window.open("https://cloud.digitalocean.com/v1/oauth/authorize?response_type=token&client_id="+clientId+"&redirect_uri="+baseURL+"/callback&scope=read+write",
                         "oauth",
                         "menubar=1,resizable=1,width=1100,height=700")
         } else {
-            doProject(e)
+            doProject()
         }
         return false
     })
@@ -98,6 +85,12 @@ function getKeys(callback) {
 }
 
 function createDroplet(callback) {
+
+    if(typeof state.droplet != 'undefined') {
+        callback(state.droplet)
+        return
+    }
+
     var formData = $('form').serializeObject()
 
     var keys = []
@@ -212,7 +205,7 @@ function renderComplete() {
     }
 }
 
-function doProject(e) {
+function doProject() {
     window.location.hash = state.id 
     localStorage.setItem( state.id, JSON.stringify(state) )
 
@@ -240,8 +233,6 @@ function doProject(e) {
             })
         }
     })
-
-    e.preventDefault()
 }
 
 function init(callback) {
@@ -260,18 +251,34 @@ function init(callback) {
         }, error)
     } else {
         renderProject(function() {
-            renderComplete()
+            doProject()
             callback(state)
         }, error)
     }
 }
 
 $(function() {
-    init(function(result, err){
-        if(err) {
-            console.log(err)
+    if(path == "/") {
+        var homeTemplate = $('script[name=home]').text()
+        var homeHTML = nunjucks.renderString(homeTemplate, {})
+        $('body').append(homeHTML)
+    }
+    else if(path == "/callback") {
+        var callback = parseQuery(window.location.hash)
+        if(typeof callback.error == 'undefined') {
+            Cookies.set( 'AccessToken', callback.access_token )
         } else {
-            console.log(result)
+
         }
-    })
+        window.close()
+    }
+    else {
+        init(function(result, err){
+            if(err) {
+                console.log(err)
+            } else {
+                console.log(result)
+            }
+        })
+    }
 })
