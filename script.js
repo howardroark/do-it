@@ -22,29 +22,8 @@ if(parser.hostname == "localhost") {
     clientId = "118ee6aceaf7a16c4f8f83536a334233bc2b22e2c6a286ef7a83fa4a2714f328"
 }
 
-function getRepo(callback) {
-    var url = 'https://api.github.com/repos/'+state.userName+'/'+state.projectName
-    if(typeof Cookies.get('GitHubToken') != 'undefined') {
-        url = url+'?access_token='+Cookies.get('GitHubToken')
-    }
-    $.ajax({
-        url: url,
-        statusCode: {
-            403: function() {
-                var github_token = prompt("The GitHub API has been called too many times. You can enter a personal access token to have unlimited access.")
-                if(github_token != null) {
-                    Cookies.set('GitHubToken', github_token)
-                }
-            }
-        },
-        success: function(data) {
-            callback(data)
-        }
-    })
-}
-
 function getProject(callback) {
-    var branch = state.repo.default_branch
+    var branch = 'master' 
     if(typeof path.split('/')[3] != 'undefined') {
         branch = path.split('/')[3]
     }
@@ -114,7 +93,7 @@ function createDroplet(callback) {
             "tar -xvf /tmp/dobutton/node.tar.gz -C /tmp/dobutton/node --strip-components=1",
             "/tmp/dobutton/node/bin/npm install -g http-server",
             "/tmp/dobutton/node/bin/node /tmp/dobutton/node/lib/node_modules/http-server/bin/http-server /tmp/dobutton/public -p 33333 -c-1 --cors &",
-            "curl -L https://raw.githubusercontent.com/"+state.userName+"/"+state.projectName+"/"+state.repo.default_branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
+            "curl -L https://raw.githubusercontent.com/"+state.userName+"/"+state.projectName+"/"+state.project.branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
             "sh /tmp/provision.sh",
             "echo '{\"status\":\"complete\"}' >/tmp/dobutton/public/state.json",
             "sleep 3600; kill -9 $(ps aux | grep -i \"http-server.*33333\" | awk {'print $2'}); rm -rf /tmp/dobutton"
@@ -247,13 +226,10 @@ function init(callback) {
         callback('', result)
     }
     if(typeof state.project == 'undefined') {
-        getRepo(function(repo) {
-            state.repo = repo
-            getProject(function(project) {
-                state.project = project
-                renderProject(function() {
-                    callback(state)
-                }, error)
+        getProject(function(project) {
+            state.project = project
+            renderProject(function() {
+                callback(state)
             }, error)
         }, error)
     } else {
