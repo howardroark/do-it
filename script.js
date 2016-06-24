@@ -44,10 +44,16 @@ function getRepo(callback) {
 }
 
 function getProject(callback) {
+    var branch = state.repo.default_branch
+    if(typeof path.split('/')[3] != 'undefined') {
+        branch = path.split('/')[3]
+    }
     $.ajax({
-        url: 'https://raw.githubusercontent.com/'+state.userName+'/'+state.projectName+'/'+state.repo.default_branch+'/project.json',
+        url: 'https://raw.githubusercontent.com/'+state.userName+'/'+state.projectName+'/'+branch+'/project.json',
         success: function(data) {
-            callback(JSON.parse(data))
+            var project = JSON.parse(data)
+            project.branch = branch
+            callback(project)
         }
     })
 }
