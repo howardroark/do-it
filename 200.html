@@ -23,7 +23,7 @@
     <script type="text/template" name="project">
         <div role="main" class="content">
             <h2>{{ project.name }}</h2>
-            <div class="instructions"></div>
+            <div class="complete"></div>
             <form>
                 <fieldset>
                     <span>Name:</span>
@@ -60,7 +60,7 @@
                 </fieldset>
                 <fieldset>
                     <span>Config:</span>
-                    <em><a href="{{ repo.html_url }}/blob/{{ repo.default_branch }}/project.json">project.json</a></em>
+                    <em><a href="{{ repo.html_url }}/blob/{{ project.branch }}/project.json">project.json</a></em>
                 </fieldset>
                 <button class="button"><i class="fa fa-cloud-upload" aria-hidden="true"></i> DO</button>
             </form>
