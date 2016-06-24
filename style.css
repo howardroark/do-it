@@ -79,7 +79,7 @@ input[readonly] {
 .content fieldset *:nth-child(2) {
   width: 75%;
 }
-.instructions {
+.complete {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   color: #333;
@@ -88,100 +88,100 @@ input[readonly] {
   word-wrap: break-word;
 }
 
-.instructions a {
+.complete a {
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
 }
 
-.instructions a:active,
-.instructions a:hover {
+.complete a:active,
+.complete a:hover {
   outline-width: 0;
 }
 
-.instructions strong {
+.complete strong {
   font-weight: inherit;
 }
 
-.instructions strong {
+.complete strong {
   font-weight: bolder;
 }
 
-.instructions h1 {
+.complete h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
 
-.instructions img {
+.complete img {
   border-style: none;
 }
 
-.instructions svg:not(:root) {
+.complete svg:not(:root) {
   overflow: hidden;
 }
 
-.instructions code,
-.instructions kbd,
-.instructions pre {
+.complete code,
+.complete kbd,
+.complete pre {
   font-family: monospace, monospace;
   font-size: 1em;
 }
 
-.instructions hr {
+.complete hr {
   box-sizing: content-box;
   height: 0;
   overflow: visible;
 }
 
-.instructions input {
+.complete input {
   font: inherit;
   margin: 0;
 }
 
-.instructions input {
+.complete input {
   overflow: visible;
 }
 
-.instructions button:-moz-focusring,
-.instructions [type="button"]:-moz-focusring,
-.instructions [type="reset"]:-moz-focusring,
-.instructions [type="submit"]:-moz-focusring {
+.complete button:-moz-focusring,
+.complete [type="button"]:-moz-focusring,
+.complete [type="reset"]:-moz-focusring,
+.complete [type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
 
-.instructions [type="checkbox"] {
+.complete [type="checkbox"] {
   box-sizing: border-box;
   padding: 0;
 }
 
-.instructions table {
+.complete table {
   border-spacing: 0;
   border-collapse: collapse;
 }
 
-.instructions td,
-.instructions th {
+.complete td,
+.complete th {
   padding: 0;
 }
 
-.instructions * {
+.complete * {
   box-sizing: border-box;
 }
 
-.instructions input {
+.complete input {
   font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-.instructions a {
+.complete a {
   color: #4078c0;
   text-decoration: none;
 }
 
-.instructions a:hover,
-.instructions a:active {
+.complete a:hover,
+.complete a:active {
   text-decoration: underline;
 }
 
-.instructions hr {
+.complete hr {
   height: 0;
   margin: 15px 0;
   overflow: hidden;
@@ -190,270 +190,270 @@ input[readonly] {
   border-bottom: 1px solid #ddd;
 }
 
-.instructions hr::before {
+.complete hr::before {
   display: table;
   content: "";
 }
 
-.instructions hr::after {
+.complete hr::after {
   display: table;
   clear: both;
   content: "";
 }
 
-.instructions h1,
-.instructions h2,
-.instructions h3,
-.instructions h4,
-.instructions h5,
-.instructions h6 {
+.complete h1,
+.complete h2,
+.complete h3,
+.complete h4,
+.complete h5,
+.complete h6 {
   margin-top: 0;
   margin-bottom: 0;
   line-height: 1.5;
 }
 
-.instructions h1 {
+.complete h1 {
   font-size: 30px;
 }
 
-.instructions h2 {
+.complete h2 {
   font-size: 21px;
 }
 
-.instructions h3 {
+.complete h3 {
   font-size: 16px;
 }
 
-.instructions h4 {
+.complete h4 {
   font-size: 14px;
 }
 
-.instructions h5 {
+.complete h5 {
   font-size: 12px;
 }
 
-.instructions h6 {
+.complete h6 {
   font-size: 11px;
 }
 
-.instructions p {
+.complete p {
   margin-top: 0;
   margin-bottom: 10px;
 }
 
-.instructions blockquote {
+.complete blockquote {
   margin: 0;
 }
 
-.instructions ul,
-.instructions ol {
+.complete ul,
+.complete ol {
   padding-left: 0;
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.instructions ol ol,
-.instructions ul ol {
+.complete ol ol,
+.complete ul ol {
   list-style-type: lower-roman;
 }
 
-.instructions ul ul ol,
-.instructions ul ol ol,
-.instructions ol ul ol,
-.instructions ol ol ol {
+.complete ul ul ol,
+.complete ul ol ol,
+.complete ol ul ol,
+.complete ol ol ol {
   list-style-type: lower-alpha;
 }
 
-.instructions dd {
+.complete dd {
   margin-left: 0;
 }
 
-.instructions code {
+.complete code {
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 12px;
 }
 
-.instructions pre {
+.complete pre {
   margin-top: 0;
   margin-bottom: 0;
   font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
-.instructions .pl-0 {
+.complete .pl-0 {
   padding-left: 0 !important;
 }
 
-.instructions .pl-1 {
+.complete .pl-1 {
   padding-left: 3px !important;
 }
 
-.instructions .pl-2 {
+.complete .pl-2 {
   padding-left: 6px !important;
 }
 
-.instructions .pl-3 {
+.complete .pl-3 {
   padding-left: 12px !important;
 }
 
-.instructions .pl-4 {
+.complete .pl-4 {
   padding-left: 24px !important;
 }
 
-.instructions .pl-5 {
+.complete .pl-5 {
   padding-left: 36px !important;
 }
 
-.instructions .pl-6 {
+.complete .pl-6 {
   padding-left: 48px !important;
 }
 
-.instructions .form-select::-ms-expand {
+.complete .form-select::-ms-expand {
   opacity: 0;
 }
 
-.instructions:before {
+.complete:before {
   display: table;
   content: "";
 }
 
-.instructions:after {
+.complete:after {
   display: table;
   clear: both;
   content: "";
 }
 
-.instructions>*:first-child {
+.complete>*:first-child {
   margin-top: 0 !important;
 }
 
-.instructions>*:last-child {
+.complete>*:last-child {
   margin-bottom: 0 !important;
 }
 
-.instructions a:not([href]) {
+.complete a:not([href]) {
   color: inherit;
   text-decoration: none;
 }
 
-.instructions .anchor {
+.complete .anchor {
   display: inline-block;
   padding-right: 2px;
   margin-left: -18px;
 }
 
-.instructions .anchor:focus {
+.complete .anchor:focus {
   outline: none;
 }
 
-.instructions h1,
-.instructions h2,
-.instructions h3,
-.instructions h4,
-.instructions h5,
-.instructions h6 {
+.complete h1,
+.complete h2,
+.complete h3,
+.complete h4,
+.complete h5,
+.complete h6 {
   margin-top: 1em;
   margin-bottom: 16px;
   font-weight: bold;
   line-height: 1.4;
 }
 
-.instructions h1 .octicon-link,
-.instructions h2 .octicon-link,
-.instructions h3 .octicon-link,
-.instructions h4 .octicon-link,
-.instructions h5 .octicon-link,
-.instructions h6 .octicon-link {
+.complete h1 .octicon-link,
+.complete h2 .octicon-link,
+.complete h3 .octicon-link,
+.complete h4 .octicon-link,
+.complete h5 .octicon-link,
+.complete h6 .octicon-link {
   color: #000;
   vertical-align: middle;
   visibility: hidden;
 }
 
-.instructions h1:hover .anchor,
-.instructions h2:hover .anchor,
-.instructions h3:hover .anchor,
-.instructions h4:hover .anchor,
-.instructions h5:hover .anchor,
-.instructions h6:hover .anchor {
+.complete h1:hover .anchor,
+.complete h2:hover .anchor,
+.complete h3:hover .anchor,
+.complete h4:hover .anchor,
+.complete h5:hover .anchor,
+.complete h6:hover .anchor {
   text-decoration: none;
 }
 
-.instructions h1:hover .anchor .octicon-link,
-.instructions h2:hover .anchor .octicon-link,
-.instructions h3:hover .anchor .octicon-link,
-.instructions h4:hover .anchor .octicon-link,
-.instructions h5:hover .anchor .octicon-link,
-.instructions h6:hover .anchor .octicon-link {
+.complete h1:hover .anchor .octicon-link,
+.complete h2:hover .anchor .octicon-link,
+.complete h3:hover .anchor .octicon-link,
+.complete h4:hover .anchor .octicon-link,
+.complete h5:hover .anchor .octicon-link,
+.complete h6:hover .anchor .octicon-link {
   visibility: visible;
 }
 
-.instructions h1 {
+.complete h1 {
   padding-bottom: 0.3em;
   font-size: 2.25em;
   line-height: 1.2;
   border-bottom: 1px solid #eee;
 }
 
-.instructions h1 .anchor {
+.complete h1 .anchor {
   line-height: 1;
 }
 
-.instructions h2 {
+.complete h2 {
   padding-bottom: 0.3em;
   font-size: 1.75em;
   line-height: 1.225;
   border-bottom: 1px solid #eee;
 }
 
-.instructions h2 .anchor {
+.complete h2 .anchor {
   line-height: 1;
 }
 
-.instructions h3 {
+.complete h3 {
   font-size: 1.5em;
   line-height: 1.43;
 }
 
-.instructions h3 .anchor {
+.complete h3 .anchor {
   line-height: 1.2;
 }
 
-.instructions h4 {
+.complete h4 {
   font-size: 1.25em;
 }
 
-.instructions h4 .anchor {
+.complete h4 .anchor {
   line-height: 1.2;
 }
 
-.instructions h5 {
+.complete h5 {
   font-size: 1em;
 }
 
-.instructions h5 .anchor {
+.complete h5 .anchor {
   line-height: 1.1;
 }
 
-.instructions h6 {
+.complete h6 {
   font-size: 1em;
   color: #777;
 }
 
-.instructions h6 .anchor {
+.complete h6 .anchor {
   line-height: 1.1;
 }
 
-.instructions p,
-.instructions blockquote,
-.instructions ul,
-.instructions ol,
-.instructions dl,
-.instructions table,
-.instructions pre {
+.complete p,
+.complete blockquote,
+.complete ul,
+.complete ol,
+.complete dl,
+.complete table,
+.complete pre {
   margin-top: 0;
   margin-bottom: 16px;
 }
 
-.instructions hr {
+.complete hr {
   height: 4px;
   padding: 0;
   margin: 16px 0;
@@ -461,28 +461,28 @@ input[readonly] {
   border: 0 none;
 }
 
-.instructions ul,
-.instructions ol {
+.complete ul,
+.complete ol {
   padding-left: 2em;
 }
 
-.instructions ul ul,
-.instructions ul ol,
-.instructions ol ol,
-.instructions ol ul {
+.complete ul ul,
+.complete ul ol,
+.complete ol ol,
+.complete ol ul {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.instructions li>p {
+.complete li>p {
   margin-top: 16px;
 }
 
-.instructions dl {
+.complete dl {
   padding: 0;
 }
 
-.instructions dl dt {
+.complete dl dt {
   padding: 0;
   margin-top: 16px;
   font-size: 1em;
@@ -490,26 +490,26 @@ input[readonly] {
   font-weight: bold;
 }
 
-.instructions dl dd {
+.complete dl dd {
   padding: 0 16px;
   margin-bottom: 16px;
 }
 
-.instructions blockquote {
+.complete blockquote {
   padding: 0 15px;
   color: #777;
   border-left: 4px solid #ddd;
 }
 
-.instructions blockquote>:first-child {
+.complete blockquote>:first-child {
   margin-top: 0;
 }
 
-.instructions blockquote>:last-child {
+.complete blockquote>:last-child {
   margin-bottom: 0;
 }
 
-.instructions table {
+.complete table {
   display: block;
   width: 100%;
   overflow: auto;
@@ -517,32 +517,32 @@ input[readonly] {
   word-break: keep-all;
 }
 
-.instructions table th {
+.complete table th {
   font-weight: bold;
 }
 
-.instructions table th,
-.instructions table td {
+.complete table th,
+.complete table td {
   padding: 6px 13px;
   border: 1px solid #ddd;
 }
 
-.instructions table tr {
+.complete table tr {
   background-color: #fff;
   border-top: 1px solid #ccc;
 }
 
-.instructions table tr:nth-child(2n) {
+.complete table tr:nth-child(2n) {
   background-color: #f8f8f8;
 }
 
-.instructions img {
+.complete img {
   max-width: 100%;
   box-sizing: content-box;
   background-color: #fff;
 }
 
-.instructions code {
+.complete code {
   padding: 0;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
@@ -552,13 +552,13 @@ input[readonly] {
   border-radius: 3px;
 }
 
-.instructions code:before,
-.instructions code:after {
+.complete code:before,
+.complete code:after {
   letter-spacing: -0.2em;
   content: "\00a0";
 }
 
-.instructions pre>code {
+.complete pre>code {
   padding: 0;
   margin: 0;
   font-size: 100%;
@@ -568,12 +568,12 @@ input[readonly] {
   border: 0;
 }
 
-.instructions .highlight {
+.complete .highlight {
   margin-bottom: 16px;
 }
 
-.instructions .highlight pre,
-.instructions pre {
+.complete .highlight pre,
+.complete pre {
   padding: 16px;
   overflow: auto;
   font-size: 85%;
@@ -582,16 +582,16 @@ input[readonly] {
   border-radius: 3px;
 }
 
-.instructions .highlight pre {
+.complete .highlight pre {
   margin-bottom: 0;
   word-break: normal;
 }
 
-.instructions pre {
+.complete pre {
   word-wrap: normal;
 }
 
-.instructions pre code {
+.complete pre code {
   display: inline;
   max-width: initial;
   padding: 0;
@@ -603,12 +603,12 @@ input[readonly] {
   border: 0;
 }
 
-.instructions pre code:before,
-.instructions pre code:after {
+.complete pre code:before,
+.complete pre code:after {
   content: normal;
 }
 
-.instructions kbd {
+.complete kbd {
   display: inline-block;
   padding: 3px 5px;
   font-size: 11px;
@@ -622,106 +622,106 @@ input[readonly] {
   box-shadow: inset 0 -1px 0 #bbb;
 }
 
-.instructions .pl-c {
+.complete .pl-c {
   color: #969896;
 }
 
-.instructions .pl-c1,
-.instructions .pl-s .pl-v {
+.complete .pl-c1,
+.complete .pl-s .pl-v {
   color: #0086b3;
 }
 
-.instructions .pl-e,
-.instructions .pl-en {
+.complete .pl-e,
+.complete .pl-en {
   color: #795da3;
 }
 
-.instructions .pl-s .pl-s1,
-.instructions .pl-smi {
+.complete .pl-s .pl-s1,
+.complete .pl-smi {
   color: #333;
 }
 
-.instructions .pl-ent {
+.complete .pl-ent {
   color: #63a35c;
 }
 
-.instructions .pl-k {
+.complete .pl-k {
   color: #a71d5d;
 }
 
-.instructions .pl-pds,
-.instructions .pl-s,
-.instructions .pl-s .pl-pse .pl-s1,
-.instructions .pl-sr,
-.instructions .pl-sr .pl-cce,
-.instructions .pl-sr .pl-sra,
-.instructions .pl-sr .pl-sre {
+.complete .pl-pds,
+.complete .pl-s,
+.complete .pl-s .pl-pse .pl-s1,
+.complete .pl-sr,
+.complete .pl-sr .pl-cce,
+.complete .pl-sr .pl-sra,
+.complete .pl-sr .pl-sre {
   color: #183691;
 }
 
-.instructions .pl-v {
+.complete .pl-v {
   color: #ed6a43;
 }
 
-.instructions .pl-id {
+.complete .pl-id {
   color: #b52a1d;
 }
 
-.instructions .pl-ii {
+.complete .pl-ii {
   background-color: #b52a1d;
   color: #f8f8f8;
 }
 
-.instructions .pl-sr .pl-cce {
+.complete .pl-sr .pl-cce {
   color: #63a35c;
   font-weight: bold;
 }
 
-.instructions .pl-ml {
+.complete .pl-ml {
   color: #693a17;
 }
 
-.instructions .pl-mh,
-.instructions .pl-mh .pl-en,
-.instructions .pl-ms {
+.complete .pl-mh,
+.complete .pl-mh .pl-en,
+.complete .pl-ms {
   color: #1d3e81;
   font-weight: bold;
 }
 
-.instructions .pl-mq {
+.complete .pl-mq {
   color: #008080;
 }
 
-.instructions .pl-mi {
+.complete .pl-mi {
   color: #333;
   font-style: italic;
 }
 
-.instructions .pl-mb {
+.complete .pl-mb {
   color: #333;
   font-weight: bold;
 }
 
-.instructions .pl-md {
+.complete .pl-md {
   background-color: #ffecec;
   color: #bd2c00;
 }
 
-.instructions .pl-mi1 {
+.complete .pl-mi1 {
   background-color: #eaffea;
   color: #55a532;
 }
 
-.instructions .pl-mdr {
+.complete .pl-mdr {
   color: #795da3;
   font-weight: bold;
 }
 
-.instructions .pl-mo {
+.complete .pl-mo {
   color: #1d3e81;
 }
 
-.instructions kbd {
+.complete kbd {
   display: inline-block;
   padding: 3px 5px;
   font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
@@ -735,36 +735,36 @@ input[readonly] {
   box-shadow: inset 0 -1px 0 #bbb;
 }
 
-.instructions .full-commit .btn-outline:not(:disabled):hover {
+.complete .full-commit .btn-outline:not(:disabled):hover {
   color: #4078c0;
   border: 1px solid #4078c0;
 }
 
-.instructions :checked+.radio-label {
+.complete :checked+.radio-label {
   position: relative;
   z-index: 1;
   border-color: #4078c0;
 }
 
-.instructions .octicon {
+.complete .octicon {
   display: inline-block;
   vertical-align: text-top;
   fill: currentColor;
 }
 
-.instructions .task-list-item {
+.complete .task-list-item {
   list-style-type: none;
 }
 
-.instructions .task-list-item+.task-list-item {
+.complete .task-list-item+.task-list-item {
   margin-top: 3px;
 }
 
-.instructions .task-list-item input {
+.complete .task-list-item input {
   margin: 0 0.2em 0.25em -1.6em;
   vertical-align: middle;
 }
 
-.instructions hr {
+.complete hr {
   border-bottom-color: #eee;
 }
