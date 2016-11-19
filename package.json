@@ -4,7 +4,7 @@
   "description": "A 'Deploy to Heroku' style button for DigitalOcean",
   "scripts": {
     "install": "bower install",
-    "start": "harp server & browser-sync start --proxy http://localhost:9000 --files .",
+    "start": "harp server & browser-sync start --proxy http://localhost:9000 --files 'script.js, style.css, 200.html'",
     "deploy": "surge --domain dobutton.club"
   },
   "devDependencies": {

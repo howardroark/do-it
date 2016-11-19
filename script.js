@@ -248,8 +248,9 @@ $(function() {
     }
     else if(path == "/callback") {
         var callback = parseQuery(window.location.hash)
+        alert(callback);
         if(typeof callback.error == 'undefined') {
-            locaStorage.setItem( 'AccessToken', callback.access_token )
+            localStorage.setItem( 'AccessToken', callback.access_token )
         } else {
 
         }
