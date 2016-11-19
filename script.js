@@ -222,6 +222,12 @@ function doProject() {
 }
 
 function init(callback) {
+    window.addEventListener('storage', function(e) {
+        if (e.key == 'AccessToken') {
+            doProject()
+        }
+    })
+
     var error = function(result) {
         callback('', result)
     }
