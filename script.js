@@ -46,7 +46,7 @@ function renderProject(callback) {
 
     $('button').click(function(e) {
         e.preventDefault()
-        if(typeof Cookies.get('AccessToken') == 'undefined') {
+        if(typeof localStorage.getItem('AccessToken') == 'undefined') {
             window.open("https://cloud.digitalocean.com/v1/oauth/authorize?response_type=token&client_id="+clientId+"&redirect_uri="+baseURL+"/callback&scope=read+write",
                         "oauth",
                         "menubar=1,resizable=1,width=1100,height=700")
@@ -62,7 +62,7 @@ function renderProject(callback) {
 function getKeys(callback) {
     $.ajax({
         url: 'https://api.digitalocean.com/v2/account/keys',
-        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem('AccessToken'))},
         success: function(data) {
             callback(data.ssh_keys)
         }
@@ -114,7 +114,7 @@ function createDroplet(callback) {
         url: 'https://api.digitalocean.com/v2/droplets',
         data: JSON.stringify(dropletRequestData),
         contentType: 'application/json',
-        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))},
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem('AccessToken'))},
         success: function(data) {
             callback(data.droplet)
         }
@@ -126,7 +126,7 @@ function waitFor(action, callback) {
     var url = 'https://api.digitalocean.com/v2/droplets/'+state.droplet.id
     var dataType = 'json'
     var beforeSend = function(xhr){
-        xhr.setRequestHeader('Authorization', 'Bearer '+Cookies.get('AccessToken'))
+        xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem('AccessToken'))
     }
     var error = function() {
         setTimeout(checkDroplet, interval)
@@ -249,7 +249,7 @@ $(function() {
     else if(path == "/callback") {
         var callback = parseQuery(window.location.hash)
         if(typeof callback.error == 'undefined') {
-            Cookies.set( 'AccessToken', callback.access_token )
+            locaStorage.setItem( 'AccessToken', callback.access_token )
         } else {
 
         }

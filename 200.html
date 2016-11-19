@@ -62,14 +62,13 @@
                     <span>Config:</span>
                     <em><a href="https://github.com/{{ userName }}/{{ projectName }}/blob/{{ project.branch }}/project.json">project.json</a></em>
                 </fieldset>
-                <p>This app is 100% browser based, and all calls to DO's API are via <b>HTTPS</b>. Your access token is stored as a browser <b>Cookie</b>, and never transmitted.</p>
+                <p>This app is 100% browser based, and all calls to DO's API are via <b>HTTPS</b>. Your access token is stored in <b>localStorage</b>, and never transmitted.</p>
                 <button class="button"><i class="fa fa-cloud-upload" aria-hidden="true"></i> DO</button>
             </form>
         </div>
     </script>
 
     <script src="/vendor/jquery/dist/jquery.js"></script>
-    <script src="/vendor/js-cookie/src/js.cookie.js"></script>
     <script src="/vendor/nunjucks/browser/nunjucks.js"></script>
     <script src="/vendor/yaml.js/dist/yaml.js"></script>
     <script src="/vendor/remarkable/dist/remarkable.js"></script>
