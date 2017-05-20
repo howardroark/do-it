@@ -19,7 +19,7 @@ var clientId
 if(parser.hostname == "localhost") {
     clientId = "8ae9b734b38486dc3d140cb1321cfda7bca5ef061ecb79aee81207cd9e51d859"
 } else {
-    clientId = "118ee6aceaf7a16c4f8f83536a334233bc2b22e2c6a286ef7a83fa4a2714f328"
+    clientId = "f7c2af1485b0665383a4e70a65a92d5a98e14ea00b187319ec40dafa812b67f0"
 }
 
 function getProject(callback) {
