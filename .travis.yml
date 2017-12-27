@@ -1,5 +1,4 @@
-language: ruby
-rvm:
- - 2.2
- - jruby
- - rbx-3
+deploy:
+  provider: surge
+  project: ./static/
+  domain: dobutton.surge.sh  
