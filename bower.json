@@ -1,5 +1,5 @@
 {
-  "name": "dobutton",
+  "name": "do-button",
   "description": "A 'Deploy to Heroku' style button for DigitalOcean",
   "dependencies": {
     "jquery": "^2.2.3",
