@@ -1,4 +1,4 @@
-[![](https://travis-ci.org/howardroark/do-button.svg)](https://travis-ci.org/howardroark/do-button)
+[![](https://travis-ci.org/howardroark/do-it.svg)](https://travis-ci.org/howardroark/do-it)
 
 ## DO it
 
