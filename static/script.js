@@ -86,8 +86,8 @@ function createDroplet(callback) {
     var cloudConfig = {
         packages: ["curl"],
         runcmd: [
-            "mkdir -p /tmp/dobutton/node",
-            "mkdir -p /tmp/dobutton/public",
+            "mkdir -p /tmp/do-it/node",
+            "mkdir -p /tmp/do-it/public",
             "echo '{\"status\":\"installing\"}' >/tmp/dobutton/public/state.json",
             "curl -L https://nodejs.org/download/release/v0.10.45/node-v0.10.45-linux-x64.tar.gz -o /tmp/dobutton/node.tar.gz",
             "tar -xvf /tmp/dobutton/node.tar.gz -C /tmp/dobutton/node --strip-components=1",
