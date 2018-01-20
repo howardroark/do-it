@@ -86,17 +86,15 @@ function createDroplet(callback) {
     var cloudConfig = {
         packages: ["curl"],
         runcmd: [
-            "mkdir -p /tmp/do-it/node",
             "mkdir -p /tmp/do-it/public",
             "echo '{\"status\":\"installing\"}' >/tmp/do-it/public/state.json",
-            "curl -L https://nodejs.org/download/release/v8.9.3/node-v8.9.3-linux-x64.tar.gz -o /tmp/do-it/node.tar.gz",
-            "tar -xvf /tmp/do-it/node.tar.gz -C /tmp/do-it/node --strip-components=1",
-            "/tmp/do-it/node/bin/npm install -g http-server",
-            "/tmp/do-it/node/bin/node /tmp/do-it/node/lib/node_modules/http-server/bin/http-server /tmp/do-it/public -p 33333 -c-1 --cors &",
+            "curl -L https://github.com/mholt/caddy/releases/download/v0.10.10/caddy_v0.10.10_linux_amd64.tar.gz -o /tmp/do-it/caddy.tar.gz",
+            "tar -xvf /tmp/do-it/caddy.tar.gz -C /tmp/do-it --strip-components=1",
+            "cd /tmp/do-it/public && ../caddy --port 33333 --host 0.0.0.0 --pidfile /tmp/caddy.pid & > /dev/null",
             "curl -L https://raw.githubusercontent.com/"+state.userName+"/"+state.projectName+"/"+state.project.branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
             "sh /tmp/provision.sh",
             "echo '{\"status\":\"complete\"}' >/tmp/do-it/public/state.json",
-            "sleep 3600; kill -9 $(ps aux | grep -i \"http-server.*33333\" | awk {'print $2'}); rm -rf /tmp/do-it"
+            "sleep 3600; kill -9 $(cat /tmp/caddy.pid); rm -rf /tmp/do-it"
         ]
     } ;
     var userData = "#cloud-config\n"+YAML.stringify(cloudConfig);
