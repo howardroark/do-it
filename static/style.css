@@ -1,14 +1,5 @@
-/* CSS declarations go here */
-@font-face{ 
-  font-family: 'proxima-nova';
-  src: url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.eot');
-  src: url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'),
-       url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.woff') format('woff'),
-       url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.ttf') format('truetype'),
-       url('https://raw.githubusercontent.com/GetAmbassador/conventions-bower/master/fonts/proxima-nova/proximanova-regular-webfont.svg#webfonWebFontt') format('svg');
-}
 body {
-  font-family: proxima-nova;
+  font-family: 'Nunito', sans-serif;
   margin: 0;
   color: #1d1d1d;
 }
