@@ -87,13 +87,13 @@ function createDroplet(callback) {
         packages: ["curl"],
         runcmd: [
             "mkdir -p /tmp/do-it/public",
-            "echo '{\"status\":\"installing\"}' >/tmp/do-it/public/state.json",
+            "echo 'callback({\"status\":\"installing\"});' >/tmp/do-it/public/state.json",
             "curl -L https://github.com/mholt/caddy/releases/download/v0.10.10/caddy_v0.10.10_linux_amd64.tar.gz -o /tmp/do-it/caddy.tar.gz",
             "tar -xvf /tmp/do-it/caddy.tar.gz -C /tmp/do-it",
             "cd /tmp/do-it/public && ../caddy --port 33333 --host 0.0.0.0 --pidfile /tmp/caddy.pid & > /dev/null",
             "curl -L https://raw.githubusercontent.com/"+state.userName+"/"+state.projectName+"/"+state.project.branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
             "sh /tmp/provision.sh",
-            "echo '{\"status\":\"complete\"}' >/tmp/do-it/public/state.json",
+            "echo 'callback({\"status\":\"complete\"});' >/tmp/do-it/public/state.json",
             "sleep 3600; kill -9 $(cat /tmp/caddy.pid); rm -rf /tmp/do-it"
         ]
     } ;
@@ -121,47 +121,55 @@ function createDroplet(callback) {
 
 function waitFor(action, callback) {
     var interval = 5000;
-    var url = 'https://api.digitalocean.com/v2/droplets/'+state.droplet.id;
-    var dataType = 'json';
-    var beforeSend = function(xhr){
-        xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem('AccessToken'));
-    };
-    var error = function() {
-        setTimeout(checkDroplet, interval)
-    };
-    var success = function(data) {
-        if(data.droplet.status == 'active') {
-            var droplet = data.droplet;
-            droplet.ip = droplet.networks.v4[0].ip_address;
-            callback(droplet);
-        } else {
-            setTimeout(checkDroplet, interval);
+    
+    if (action == 'activation') {
+        function checkActivation() {
+            $.ajax({
+                url: 'https://api.digitalocean.com/v2/droplets/'+state.droplet.id,
+                dataType: 'json',
+                timeout: 2000,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem('AccessToken'));
+                },
+                error: function() {
+                    setTimeout(checkActivation, interval);
+                },
+                success: function(data) {
+                    if(data.droplet.status == 'active') {
+                        var droplet = data.droplet;
+                        droplet.ip = droplet.networks.v4[0].ip_address;
+                        callback(droplet);
+                    } else {
+                        setTimeout(checkActivation, interval);
+                    }
+                }
+            });
         }
-    };
-    if(action == 'provision') {
-        url = 'http://'+state.droplet.ip+':33333/state.json';
-        dataType = 'text';
-        beforeSend = function(xhr){};
-        success = function(data) {
-            data = JSON.parse(data);
-            if(data.status == 'complete') {
-                callback(data);
-            } else {
-                setTimeout(checkDroplet, interval);
-            }
-        }
+        checkActivation();
     }
-    var checkDroplet = function() {
-        $.ajax({
-            url: url,
-            dataType: dataType,
-            timeout: 2000,
-            beforeSend: beforeSend,
-            error: error,
-            success: success
-        });
-    };
-    checkDroplet();
+
+    if (action == 'provision') {
+        function checkProvision() {
+            $.ajax({
+                url: 'http://'+state.droplet.ip+':33333/state.json',
+                dataType: 'jsonp',
+                jsonp: 'callback',
+                timeout: 2000,
+                error: function() {
+                    setTimeout(checkProvision, interval);
+                },
+                success: function(data) {
+                    data = JSON.parse(data);
+                    if(data.status == 'complete') {
+                        callback(data);
+                    } else {
+                        setTimeout(checkProvision, interval);
+                    }
+                }
+            });
+        }
+        checkProvision();
+    }
 }
 
 function parseQuery(qstr) {
