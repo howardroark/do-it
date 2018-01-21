@@ -153,7 +153,7 @@ function waitFor(action, callback) {
             $.ajax({
                 url: 'http://'+state.droplet.ip+':33333/state.json',
                 dataType: 'jsonp',
-                jsonp: 'callback',
+                jsonpCallback: 'callback',
                 timeout: 2000,
                 error: function() {
                     setTimeout(checkProvision, interval);
