@@ -2,4 +2,4 @@
 
 ## DO it
 
-[![](https://do-it.surge.sh/do.svg)](https://do-it.surge.sh/howardroark/gravops) 
+[![](https://do-it.surge.sh/do.svg)](http://do-it.surge.sh/howardroark/gravops) 
