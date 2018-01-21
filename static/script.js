@@ -87,13 +87,13 @@ function createDroplet(callback) {
         packages: ["curl"],
         runcmd: [
             "mkdir -p /tmp/do-it/public",
-            "echo 'callback({\"status\":\"installing\"});' >/tmp/do-it/public/state.json",
+            "echo 'callback(JSON.stringify({\"status\":\"installing\"}));' >/tmp/do-it/public/state.json",
             "curl -L https://github.com/mholt/caddy/releases/download/v0.10.10/caddy_v0.10.10_linux_amd64.tar.gz -o /tmp/do-it/caddy.tar.gz",
             "tar -xvf /tmp/do-it/caddy.tar.gz -C /tmp/do-it",
             "cd /tmp/do-it/public && ../caddy --port 33333 --host 0.0.0.0 --pidfile /tmp/caddy.pid & > /dev/null",
             "curl -L https://raw.githubusercontent.com/"+state.userName+"/"+state.projectName+"/"+state.project.branch+"/"+state.project.provision.script+" -o /tmp/provision.sh",
             "sh /tmp/provision.sh",
-            "echo 'callback({\"status\":\"complete\"});' >/tmp/do-it/public/state.json",
+            "echo 'callback(JSON.stringify({\"status\":\"complete\"}));' >/tmp/do-it/public/state.json",
             "sleep 3600; kill -9 $(cat /tmp/caddy.pid); rm -rf /tmp/do-it"
         ]
     } ;
