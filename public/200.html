@@ -29,6 +29,8 @@
         <div role="main" class="content">
             <div class="complete"></div>
             <form>
+                <p>This app is <b>100% browser based</b>. All calls to DO's API are <b>https</b>. Your token is stored in <b>localStorage</b></p>
+ 
                 <fieldset>
                     <span>Name:</span>
                     <input name="name" value="{{ project.name }}" />
@@ -66,7 +68,7 @@
                     <span>Config:</span>
                     <em><a href="https://github.com/{{ userName }}/{{ projectName }}/blob/{{ project.branch }}/do.json">do.json</a></em>
                 </fieldset>
-                <p>This app is <b>100% browser based</b>. All calls to DO's API are <b>https</b>. Your token is stored in <b>localStorage</b></p>
+                
                 <button class="button">DO it</button>
             </form>
         </div>
