@@ -28,7 +28,7 @@ function getProject(callback) {
         branch = path.split('/')[3];
     }
     $.ajax({
-        url: 'https://raw.githubusercontent.com/'+state.userName+'/'+state.projectName+'/'+branch+'/project.json',
+        url: 'https://raw.githubusercontent.com/'+state.userName+'/'+state.projectName+'/'+branch+'/do.json',
         success: function(data) {
             var project = JSON.parse(data);
             project.branch = branch;
