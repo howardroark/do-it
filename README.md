@@ -1,6 +1,6 @@
 # DO it
 
-This app is **100% browser based**. All calls to DO's API are **https**.
+This app is **100% browser based**.
 
 ## Examples
 
