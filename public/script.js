@@ -187,9 +187,9 @@ function renderComplete() {
     $('button').text("GO!");
     $('button').click(function() {var win = window.open('http://'+state.droplet.networks.v4[0].ip_address, '_blank'); win.focus(); return false});
     $('fieldset').hide();
-    if(typeof state.project.complete != 'undefined') {
+    if(typeof state.project.instructions != 'undefined') {
         $.ajax({
-            url: 'https://raw.githubusercontent.com/'+state.userName+'/'+state.projectName+'/'+state.project.branch+'/'+state.project.complete,
+            url: 'https://raw.githubusercontent.com/'+state.userName+'/'+state.projectName+'/'+state.project.branch+'/'+state.project.instructions,
             success: function(data) {
                 $('.complete').html(nunjucks.renderString(md.render(data), state));
             }
