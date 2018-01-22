@@ -3,11 +3,8 @@ body {
   margin: 0;
   color: #1d1d1d;
 }
-a {
+header a {
   color: white;
-}
-form a {
-  color: black;
 }
 b {
   color: green; 
