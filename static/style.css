@@ -3,6 +3,9 @@ body {
   margin: 0;
   color: #1d1d1d;
 }
+b {
+  color: green; 
+}
 .content {
   max-width: 480px;
   margin: 0 auto;
