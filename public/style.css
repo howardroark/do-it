@@ -6,6 +6,9 @@ body {
 a {
   color: white;
 }
+form a {
+  color: black;
+}
 b {
   color: green; 
 }
