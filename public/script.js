@@ -30,7 +30,7 @@ function getProject(callback) {
     $.ajax({
         url: 'https://raw.githubusercontent.com/'+state.userName+'/'+state.projectName+'/'+branch+'/do.json',
         success: function(data) {
-            var project = JSON.parse(data);
+            var project = JSON.parse(data).do;
             project.branch = branch;
             callback(project);
         }
