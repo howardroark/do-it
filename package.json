@@ -4,7 +4,7 @@
   "description": "A 'Deploy to Heroku' style button for DigitalOcean",
   "scripts": {
     "install": "bower install",
-    "deploy": "surge --project ./static --domain do-it.surge.sh"
+    "deploy": "surge --project ./public --domain do-it.surge.sh"
   },
   "devDependencies": {
     "bower": "*",
