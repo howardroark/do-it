@@ -1,6 +1,6 @@
 # DO it
 
-This app is **100% browser based**.
+This app is **browser based**.
 
 ## Examples
 
