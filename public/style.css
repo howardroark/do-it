@@ -3,6 +3,9 @@ body {
   margin: 0;
   color: #1d1d1d;
 }
+a {
+  color: white;
+}
 b {
   color: green; 
 }
