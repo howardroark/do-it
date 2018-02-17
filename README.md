@@ -8,4 +8,4 @@ This app is **browser based**.
 
 [GithHub](https://github.com/howardroark/grav-base) 
 
-[![](http://do-it.surge.sh/do-it.svg)](http://do-it.surge.sh/howardroark/grav-base) 
+[![](http://do-it.surge.sh/do-it.png)](http://do-it.surge.sh/howardroark/grav-base) 
