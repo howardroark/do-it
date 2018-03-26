@@ -191,7 +191,7 @@ function renderInstructions() {
             var instructionsHTML = nunjucks.renderString(instructionsTemplate, {
                 markdown: nunjucks.renderString(md.render(data), state)
             });
-            $('body').html(instructionsHTML);
+            $('div[role="main"]').html(instructionsHTML);
         }
     });
 }
