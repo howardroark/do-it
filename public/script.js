@@ -183,15 +183,10 @@ function parseQuery(qstr) {
 }
 
 function renderInstructions() {
-    var instructionsTemplate = $('script[name=instructions]').text();
-
     $.ajax({
         url: 'https://raw.githubusercontent.com/'+state.userName+'/'+state.projectName+'/'+state.project.branch+'/'+state.project.instructions,
         success: function(data) {
-            var instructionsHTML = nunjucks.renderString(instructionsTemplate, {
-                markdown: nunjucks.renderString(md.render(data), state)
-            });
-            $('div[role="main"]').html($.parseHTML(instructionsHTML));
+            $('div[role="main"]').html($.parseHTML(nunjucks.renderString(md.render(data), state)));
         }
     });
 }
