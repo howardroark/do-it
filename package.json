@@ -8,6 +8,6 @@
   },
   "devDependencies": {
     "bower": "*",
-    "surge": "*"
+    "surge": "https://github.com/howardroark/surge"
   }
 }
